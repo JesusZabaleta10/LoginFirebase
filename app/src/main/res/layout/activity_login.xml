@@ -50,14 +50,24 @@
             android:id="@+id/tv_recu_pass"
             android:onClick="forgotPassword"/>
     <Button
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:id="@+id/registrar"
             android:text="Registrate"
+            android:layout_gravity="center"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"
             android:layout_marginTop="50dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:onClick="registrar"/>
+
+    <com.google.android.gms.common.SignInButton
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/signInBtn"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"/>
 </LinearLayout>
