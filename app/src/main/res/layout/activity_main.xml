@@ -10,7 +10,7 @@
         tools:context=".MainActivity">
 
     <TextView
-            android:text="Bienvenidos a TodoEnCasaApp"
+            android:text="Bienvenido a TodoEnCasaApp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"

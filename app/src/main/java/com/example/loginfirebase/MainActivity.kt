@@ -5,10 +5,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import com.facebook.login.LoginManager
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.data.remote.FacebookSignInHandler
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -26,19 +31,39 @@ class MainActivity : AppCompatActivity() {
 
         val acct = GoogleSignIn.getLastSignedInAccount(this)
         if (acct != null) {
-            tv_nombre.text = "NOMBRE: " + acct.displayName
-            tv_correo.text = "CORREO: " + acct.email
-            tv_id.text = "ID: " + acct.id
+
+            val nombre = acct.displayName
+            val correo = acct.email
+            val id = acct.id
+
+            tv_nombre.text = "NOMBRE: " + nombre
+            tv_correo.text = "CORREO: " + correo
+            tv_id.text = "ID: " + id
+
+            auth = FirebaseAuth.getInstance()
+
+            val user: FirebaseUser? = auth.currentUser
+
+            val user2 = User(nombre.toString(), correo.toString(), id.toString())
+
+            val database = FirebaseDatabase.getInstance()
+            val myRef = database.getReference("Usuarios de Gmail")
+
+            myRef.child(user?.uid.toString()).setValue(user2)
         }
 
         mGoogleSignInClient = GoogleSignIn.getClient(this,gso)
-        auth = FirebaseAuth.getInstance()
     }
 
     fun salir(view: View){
-        //FirebaseAuth.getInstance().signOut() // Cerrar correo electrónico
+
+        // Login con Facebook //
+        //auth.signOut() //Desconectar de Firebase
+        FirebaseAuth.getInstance().signOut()
+        LoginManager.getInstance().logOut()
+        // Login con Facebook //
+
         mGoogleSignInClient.signOut() //Desconectar de Google
-        auth.signOut() //Desconectar de Firebase
         startActivity(Intent(this,LoginActivity::class.java))
         Toast.makeText(this, "Sesion Cerrada", Toast.LENGTH_SHORT).show()
         finish()

@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_registro.*
 
 class RegistroActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class RegistroActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
-        dbReference = database.reference.child("Usuario")
+        //dbReference = database.reference.child("Usuario Correo")
     }
 
     fun registrar(view: View){
@@ -54,17 +55,27 @@ class RegistroActivity : AppCompatActivity() {
                 .addOnCompleteListener(this){
                     task ->
                     if(task.isComplete){
-                        val user:FirebaseUser?=auth.currentUser
-
-                        val userDB = dbReference.child(nombre + " " + apellido)
+                        val user:FirebaseUser? = auth.currentUser
                         verifyEmail(user)
 
-                        userDB.child("Nombre").setValue(nombre)
+                        //val userDB = dbReference.child(user?.uid.toString())
+                        /*userDB.child("Nombre").setValue(nombre)
                         userDB.child("Apellido").setValue(apellido)
                         userDB.child("Correo").setValue(correo)
-                        userDB.child("Contraseña").setValue(contraseña)
+                        //userDB.child("Contraseña").setValue(contraseña)*/
+
+                        //tv_nombre.text = "NOMBRE: " + nombre + " " + apellido
+                        //tv_correo.text = "CORREO: " + correo
+                        //tv_id.text = "ID: " + user?.uid.toString()
+
+                        val user2 = User(nombre + " " + apellido,correo,user?.uid.toString())
+
+                        val database = FirebaseDatabase.getInstance()
+                        val myRef = database.getReference("Usuarios de Correo")
+
+                        myRef.child(user?.uid.toString()).setValue(user2)
+
                         action()
-                        Toast.makeText(this, "Te has registrado con éxito", Toast.LENGTH_SHORT).show()
                     }
                 }
         }
@@ -72,6 +83,7 @@ class RegistroActivity : AppCompatActivity() {
 
     private fun action(){
         startActivity(Intent(this,LoginActivity::class.java))
+        Toast.makeText(this, "Te has registrado con éxito", Toast.LENGTH_SHORT).show()
         finish()
     }
 
@@ -80,7 +92,7 @@ class RegistroActivity : AppCompatActivity() {
             ?.addOnCompleteListener(this){
                     task ->
                 if(task.isComplete){
-                    Toast.makeText(this, "Correo enviado", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Correo de verificación enviado", Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(this, "Error al enviar el correo", Toast.LENGTH_SHORT).show()
                 }

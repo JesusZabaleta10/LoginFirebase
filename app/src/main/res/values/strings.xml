@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">LoginFirebase</string>
+    <string name="facebook_application_id" translatable="false">679116929255554</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">fb679116929255554</string>
 </resources>
