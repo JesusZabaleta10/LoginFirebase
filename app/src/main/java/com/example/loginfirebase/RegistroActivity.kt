@@ -82,6 +82,7 @@ class RegistroActivity : AppCompatActivity() {
     }
 
     private fun action(){
+        FirebaseAuth.getInstance().signOut()
         startActivity(Intent(this,LoginActivity::class.java))
         Toast.makeText(this, "Te has registrado con éxito", Toast.LENGTH_SHORT).show()
         finish()
