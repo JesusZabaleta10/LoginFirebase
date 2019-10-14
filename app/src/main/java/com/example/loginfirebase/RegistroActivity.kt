@@ -30,7 +30,6 @@ class RegistroActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         database = FirebaseDatabase.getInstance()
         auth = FirebaseAuth.getInstance()
-        //dbReference = database.reference.child("Usuario Correo")
     }
 
     fun registrar(view: View){
@@ -57,16 +56,6 @@ class RegistroActivity : AppCompatActivity() {
                     if(task.isComplete){
                         val user:FirebaseUser? = auth.currentUser
                         verifyEmail(user)
-
-                        //val userDB = dbReference.child(user?.uid.toString())
-                        /*userDB.child("Nombre").setValue(nombre)
-                        userDB.child("Apellido").setValue(apellido)
-                        userDB.child("Correo").setValue(correo)
-                        //userDB.child("Contraseña").setValue(contraseña)*/
-
-                        //tv_nombre.text = "NOMBRE: " + nombre + " " + apellido
-                        //tv_correo.text = "CORREO: " + correo
-                        //tv_id.text = "ID: " + user?.uid.toString()
 
                         val user2 = User(nombre + " " + apellido,correo,user?.uid.toString())
 

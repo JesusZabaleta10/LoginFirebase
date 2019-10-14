@@ -51,7 +51,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        getKeyHash()
+        getKeyHash() //Obtener el KeyHash para facebook
 
         // Login con Facebook //
         callbackManager = CallbackManager.Factory.create()
@@ -113,10 +113,6 @@ class LoginActivity : AppCompatActivity() {
                     val nombre = user?.displayName
                     val correo = user?.email
                     val id = user?.uid.toString()
-
-                    //tv_nombre.text = "NOMBRE: " + nombre
-                    //tv_correo.text = "CORREO: " + correo
-                    //tv_id.text = "ID: " + id
 
                     auth = FirebaseAuth.getInstance()
 
@@ -229,8 +225,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun action() {
-        var intent = Intent(this, MainActivity::class.java)
-        startActivityForResult(intent, 5678)
+        startActivity(Intent(this, MainActivity::class.java))
+        //startActivityForResult(intent, 5678)
         finish()
     }
     //---------------------------------- Login con correo ----------------------------------------//
@@ -250,6 +246,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    //Obtener el KeyHash para facebook
     fun getKeyHash(){
         try {
             val info = packageManager.getPackageInfo(
@@ -265,7 +262,6 @@ class LoginActivity : AppCompatActivity() {
         } catch (e: NoSuchAlgorithmException) {
 
         }
-
     }
 
 }
